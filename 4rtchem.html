@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রসায়ন ৪র্থ অধ্যায় কুইজ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+        }
+        .fade-in { animation: fadeIn 0.4s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const quizData = [
+            {
+                question: "১. আন্তর্জাতিকভাবে রসায়নবিদ দ্বারা স্বীকৃত সবুজ রসায়নের মূলনীতি কয়টি?",
+                options: ["১০টি", "১২টি", "১৪টি", "১৫টি"],
+                answer: "১২টি",
+                rationale: "সবুজ রসায়ন বা গ্রিন কেমিস্ট্রির ১২টি মূলনীতি রয়েছে যা বর্জ্য রোধ ও পরিবেশ সুরক্ষায় ব্যবহৃত হয়।"
+            },
+            {
+                question: "২. বিক্রিয়া হারের একক নিচের কোনটি?",
+                options: ["mol L s-1", "mol L-1 s", "mol L-1 s-1", "mol-1 L-1 s-1"],
+                answer: "mol L-1 s-1",
+                rationale: "বিক্রিয়া হার হলো একক সময়ে ঘনমাত্রার পরিবর্তন, তাই এর একক মোল পার লিটার পার সেকেন্ড।"
+            },
+            {
+                question: "৩. তাপমাত্রার সাথে বিক্রিয়ার হারের সম্পর্ক কীরূপ?",
+                options: ["ব্যস্তানুপাতিক", "অধিবৃত্তীয়", "সমানুপাতিক", "পরাবৃত্তীয়"],
+                answer: "সমানুপাতিক",
+                rationale: "তাপমাত্রা বাড়লে অণুগুলোর গতিশক্তি ও সংঘর্ষের হার বাড়ে, ফলে বিক্রিয়ার হার বৃদ্ধি পায়।"
+            },
+            {
+                question: "৪. কোনটি সাম্যাবস্থার বৈশিষ্ট্য নয়?",
+                options: ["সাম্যের স্থায়িত্ব", "বিক্রিয়ার হার", "বিক্রিয়ার অসম্পূর্ণতা", "উভয় দিক থেকে সুগম্যতা"],
+                answer: "বিক্রিয়ার অসম্পূর্ণতা",
+                rationale: "সাম্যাবস্থায় বিক্রিয়া কখনো শেষ হয় না বা অসম্পূর্ণ থাকে না, বরং সম্মুখ ও পশ্চাৎ হার সমান থাকে।"
+            },
+            {
+                question: "৫. কোনটি ঋণাত্মক প্রভাবক?",
+                options: ["সোডিয়াম", "সালফার ডাই-অক্সাইড", "ফসফরাস পেন্টাক্সাইড", "গ্লিসারিন"],
+                answer: "গ্লিসারিন",
+                rationale: "গ্লিসারিন হাইড্রোজেন পারক্সাইডের বিয়োজন হার কমিয়ে দেয়, তাই এটি একটি ঋণাত্মক প্রভাবক।"
+            },
+            {
+                question: "৬. কোনটি প্রভাবক বিষ?",
+                options: ["অ্যালুমিনা", "ম্যাঙ্গানিজ ডাই-অক্সাইড", "আর্সেনিক অক্সাইড (As2O3)", "নিকেল"],
+                answer: "আর্সেনিক অক্সাইড (As2O3)",
+                rationale: "আর্সেনিক অক্সাইড প্রভাবকের পৃষ্ঠতলকে ঢেকে ফেলে তার কার্যক্ষমতা নষ্ট করে দেয়।"
+            },
+            {
+                question: "৭. হেবার পদ্ধতিতে অ্যামোনিয়া উৎপাদনে কোন প্রভাবকটি ব্যবহৃত হয়?",
+                options: ["মলিবেডেনাম", "লোহা চূর্ণ (Fe)", "নিকেল", "ক্রোমিয়াম"],
+                answer: "লোহা চূর্ণ (Fe)",
+                rationale: "হেবার পদ্ধতিতে নাইট্রোজেন ও হাইড্রোজেন থেকে অ্যামোনিয়া তৈরিতে লোহা চূর্ণ প্রভাবক হিসেবে কাজ করে।"
+            },
+            {
+                question: "৮. Kw এর মান কত (২৫° সেলসিয়াসে)?",
+                options: ["10^-7", "10^7", "10^-14", "10^14"],
+                answer: "10^-14",
+                rationale: "পানির আয়নিক গুণফল Kw এর মান ২৫° সেলসিয়াস তাপমাত্রায় ১০-১৪।"
+            },
+            {
+                question: "৯. কোনটি অনুবন্ধী অম্ল-ক্ষারক যুগল?",
+                options: ["HCl, NaOH", "H3O+, H2O", "O2, H2O", "H+, Cl-"],
+                answer: "H3O+, H2O",
+                rationale: "একটি প্রোটনের ব্যবধান থাকলে তাদের অনুবন্ধী যুগল বলা হয়; H2O একটি প্রোটন গ্রহণ করে H3O+ হয়।"
+            },
+            {
+                question: "১০. HSO4- এর অনুবন্ধী অম্ল কোনটি?",
+                options: ["H2SO4", "H2SO3", "SO4^2-", "HSO3-"],
+                answer: "H2SO4",
+                rationale: "ক্ষারকের সাথে একটি প্রোটন যুক্ত হলে তার অনুবন্ধী অম্ল তৈরি হয়।"
+            },
+            {
+                question: "১১. ০.০৫ M H2SO4 দ্রবণের pH কত?",
+                options: ["১.০", "১.৮৮", "২.৩", "৩.৫"],
+                answer: "১.০",
+                rationale: "H2SO4 একটি দ্বিক্ষারকীয় অম্ল। [H+] = 2 x 0.05 = 0.1। pH = -log(0.1) = 1।"
+            },
+            {
+                question: "১২. pH মান ৩.০ এবং ৬.০ এর দুটি দ্রবণের মধ্যে প্রথমটি দ্বিতীয়টির চেয়ে কতগুণ বেশি অম্লীয়?",
+                options: ["৫০ গুণ", "১০০ গুণ", "১০০০ গুণ", "১০,০০০ গুণ"],
+                answer: "১০০০ গুণ",
+                rationale: "pH এর পার্থক্য ৩ হলে হাইড্রোজেন আয়নের ঘনমাত্রার পার্থক্য হবে ১০^৩ বা ১০০০ গুণ।"
+            },
+            {
+                question: "১৩. মানুষের রক্তের স্বাভাবিক pH কত?",
+                options: ["৯.৪", "৮.৩", "৭.৪", "৬.৪"],
+                answer: "৭.৪",
+                rationale: "মানুষের রক্তের pH রেঞ্জ সাধারণত ৭.৩৫ থেকে ৭.৪৫ এর মধ্যে থাকে, গড় মান ৭.৪।"
+            },
+            {
+                question: "১৪. মাটির pH মান কমানোর জন্য কোনটি ব্যবহৃত হয়?",
+                options: ["চুন", "ইউরিয়া", "ডলোমাইট", "অ্যামোনিয়াম ফসফেট"],
+                answer: "অ্যামোনিয়াম ফসফেট",
+                rationale: "ক্ষারীয় মাটির pH কমাতে অম্লীয় সার যেমন অ্যামোনিয়াম ফসফেট ব্যবহার করা হয়।"
+            },
+            {
+                question: "১৫. তীব্র এসিড ও তীব্র ক্ষারকের প্রশমন তাপ কত?",
+                options: ["-৫৭.৩৪ kJ/mol", "-৫৫.২৬ kJ/mol", "-৬৬.৮ kJ/mol", "-১২.৬ kJ/mol"],
+                answer: "-৫৭.৩৪ kJ/mol",
+                rationale: "তীব্র এসিড ও ক্ষারকের ক্ষেত্রে সর্বদা একই প্রশমন তাপ নির্গত হয় কারণ এখানে মূলত পানি উৎপন্ন হয়।"
+            },
+            {
+                question: "১৬. গ্রিন কেমিস্ট্রির ১২টি নীতির মধ্যে নিচের কোনটি সঠিক নয়?",
+                options: ["বর্জ্য পদার্থ রোধকরণ", "নিরাপদ রাসায়নিক দ্রব্য তৈরি", "শ্রমিকদের স্বাস্থ্য সেবা", "দুর্ঘটনা প্রতিরোধ"],
+                answer: "শ্রমিকদের স্বাস্থ্য সেবা",
+                rationale: "শ্রমিকদের স্বাস্থ্য সেবা নীতিটি গ্রিন কেমিস্ট্রির ১২টি মূলনীতির অন্তর্ভুক্ত নয়।"
+            },
+            {
+                question: "১৭. কোনটি অটো-প্রভাবক হিসেবে কাজ করে?",
+                options: ["MnO4-", "Mn2+", "K+", "C2O4^2-"],
+                answer: "Mn2+",
+                rationale: "অক্সালিক এসিড ও পটাশিয়াম পারম্যাঙ্গানেটের বিক্রিয়ায় উৎপন্ন Mn2+ বিক্রিয়ার গতি বাড়িয়ে দেয়।"
+            },
+            {
+                question: "১৮. নিচের কোনটি অধিক তীব্র বা শক্তিশালী এসিড?",
+                options: ["HNO3", "H3PO4", "HClO4", "H2SO4"],
+                answer: "HClO4",
+                rationale: "কেন্দ্রীয় পরমাণুর জারণ সংখ্যা যার বেশি, সেই অক্সো এসিড তত বেশি শক্তিশালী হয়। এখানে ক্লোরিনের জারণ সংখ্যা +৭।"
+            },
+            {
+                question: "১৯. সবচেয়ে দুর্বল এসিড কোনটি?",
+                options: ["H3BO3", "HNO3", "H3PO3", "HClO2"],
+                answer: "H3BO3",
+                rationale: "বোরিক এসিড (H3BO3) একটি অতি দুর্বল মনোপ্রোটিক এসিড।"
+            },
+            {
+                question: "২০. এটম ইকোনমি (Atom Economy) সবচেয়ে বেশি হয় কোন বিক্রিয়ায়?",
+                options: ["প্রতিস্থাপন", "যোজন বিক্রিয়া", "বিয়োজন", "অপসারণ"],
+                answer: "যোজন বিক্রিয়া",
+                rationale: "যোজন বা সংযোজন বিক্রিয়ায় কোনো উপজাত তৈরি হয় না বলে এর এটম ইকোনমি ১০০% হয়।"
+            }
+        ];
+
+        function App() {
+            const [screen, setScreen] = useState('start');
+            const [currentQ, setCurrentQ] = useState(0);
+            const [score, setScore] = useState(0);
+            const [selectedOption, setSelectedOption] = useState(null);
+            const [showRationale, setShowRationale] = useState(false);
+            const [allAnswers, setAllAnswers] = useState([]);
+            const [showSheet, setShowSheet] = useState(false);
+
+            const handleStart = () => {
+                setScreen('quiz');
+                setCurrentQ(0);
+                setScore(0);
+                setAllAnswers([]);
+                setShowSheet(false);
+            };
+
+            const handleOptionClick = (option) => {
+                if (selectedOption !== null) return;
+                setSelectedOption(option);
+                setShowRationale(true);
+                const isCorrect = option === quizData[currentQ].answer;
+                if (isCorrect) setScore(s => s + 1);
+                setAllAnswers([...allAnswers, {
+                    question: quizData[currentQ].question,
+                    selected: option,
+                    correct: quizData[currentQ].answer,
+                    isCorrect: isCorrect,
+                    rationale: quizData[currentQ].rationale
+                }]);
+            };
+
+            const handleNext = () => {
+                if (currentQ < quizData.length - 1) {
+                    setCurrentQ(currentQ + 1);
+                    setSelectedOption(null);
+                    setShowRationale(false);
+                } else {
+                    setScreen('result');
+                }
+            };
+
+            if (screen === 'start') {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-4 fade-in">
+                        <div className="bg-white p-10 rounded-3xl shadow-2xl max-w-md w-full text-center border-b-8 border-blue-500">
+                            <div className="text-6xl mb-4">⚗️</div>
+                            <h1 className="text-3xl font-black text-gray-800 mb-2">রসায়ন কুইজ</h1>
+                            <p className="text-blue-600 font-bold mb-8">৪র্থ অধ্যায়: রাসায়নিক পরিবর্তন</p>
+                            <button onClick={handleStart} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg transition transform hover:scale-105">
+                                কুইজ শুরু করুন
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (screen === 'quiz') {
+                const q = quizData[currentQ];
+                return (
+                    <div className="min-h-screen p-4 flex flex-col items-center fade-in">
+                        <div className="max-w-2xl w-full">
+                            <div className="bg-white p-4 rounded-2xl shadow-md mb-6 flex items-center justify-between">
+                                <div className="flex-1 bg-gray-100 rounded-full h-2 mr-4">
+                                    <div className="bg-blue-600 h-2 rounded-full transition-all duration-500" style={{ width: `${((currentQ + 1)/20)*100}%` }}></div>
+                                </div>
+                                <span className="font-bold text-blue-600">{currentQ + 1}/২০</span>
+                            </div>
+
+                            <div className="bg-white p-8 rounded-3xl shadow-xl mb-6">
+                                <h2 className="text-xl font-bold text-gray-800 mb-8">{q.question}</h2>
+                                <div className="grid gap-3">
+                                    {q.options.map((opt, i) => (
+                                        <button 
+                                            key={i} 
+                                            onClick={() => handleOptionClick(opt)}
+                                            className={`w-full text-left p-4 rounded-2xl border-2 font-medium transition-all ${
+                                                selectedOption === null ? 'border-gray-100 hover:border-blue-300 hover:bg-blue-50' :
+                                                opt === q.answer ? 'border-green-500 bg-green-50 text-green-700' :
+                                                opt === selectedOption ? 'border-red-500 bg-red-50 text-red-700' : 'border-gray-50 opacity-40'
+                                            }`}
+                                            disabled={selectedOption !== null}
+                                        >
+                                            {opt}
+                                        </button>
+                                    ))}
+                                </div>
+                                {showRationale && (
+                                    <div className="mt-8 p-5 bg-blue-50 rounded-2xl border-l-4 border-blue-500 fade-in">
+                                        <p className="text-xs font-bold text-blue-600 uppercase mb-1">ব্যাখ্যা:</p>
+                                        <p className="text-gray-700 text-sm leading-relaxed">{q.rationale}</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {selectedOption && (
+                                <button onClick={handleNext} className="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl shadow-xl transition hover:bg-black">
+                                    {currentQ === quizData.length - 1 ? "ফলাফল দেখুন" : "পরবর্তী প্রশ্ন →"}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+
+            if (screen === 'result') {
+                return (
+                    <div className="min-h-screen p-4 flex flex-col items-center justify-center fade-in">
+                        <div className="max-w-xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+                            <div className="bg-blue-600 p-10 text-center text-white">
+                                <h1 className="text-4xl font-black mb-2">{score >= 15 ? 'চমৎকার!' : 'ভালো চেষ্টা!'}</h1>
+                                <div className="text-7xl font-black my-4">{score}<span className="text-2xl opacity-60">/২০</span></div>
+                                <p className="font-medium opacity-80">আপনার সঠিক উত্তর প্রদানের হার { (score/20)*100 }%</p>
+                            </div>
+                            <div className="p-8 flex flex-col gap-4">
+                                <button onClick={handleStart} className="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg transition hover:bg-blue-700">আবার খেলুন</button>
+                                <button onClick={() => setShowSheet(!showSheet)} className="w-full bg-gray-100 text-gray-700 font-bold py-4 rounded-2xl transition hover:bg-gray-200">
+                                    {showSheet ? 'উত্তরপত্র বন্ধ করুন' : 'উত্তরপত্র দেখুন'}
+                                </button>
+                                {showSheet && (
+                                    <div className="mt-4 space-y-4 max-h-80 overflow-y-auto pr-2">
+                                        {allAnswers.map((item, idx) => (
+                                            <div key={idx} className={`p-4 rounded-2xl border ${item.isCorrect ? 'border-green-100 bg-green-50' : 'border-red-100 bg-red-50'}`}>
+                                                <p className="text-sm font-bold mb-1">{item.question}</p>
+                                                <p className="text-xs font-medium">সঠিক উত্তর: <span className="text-green-600">{item.correct}</span></p>
+                                                <p className="text-xs mt-2 text-gray-500 italic border-t pt-2 border-gray-200">{item.rationale}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
